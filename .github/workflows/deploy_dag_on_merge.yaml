@@ -1,0 +1,42 @@
+# Deploy application DAGs to Stage and Prod as soon as a PR is merged to main branch
+# Not deploying to dev-private again as it can mess other PRs in progress
+# Please note we have common DAGs and custom DAGs, this deploys custom
+# Custom dags are the DAGs that are present in code repository
+# Common DAGs are utilities, libs etc present in MWAA instance repo.
+
+
+name: DAG - Stage & Prod
+
+# Run when PR is merged to main branch only
+on:
+  pull_request:
+    branches:
+      - main
+    types: 
+      - closed
+    paths:  # will only deploy dags, there is separate pipeline for scripts deploy
+      - 'dags/**'
+      - '**/dags/**'
+
+# Ensures that only one deploy task will run at a time.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  stage_dag:
+    if: github.event.pull_request.merged == true
+    uses: gdcorp-dna/de-github-actions-common/.github/workflows/deploy_common.yaml@main  #TODO: Change to commit SHA
+    with:
+      aws_environment: stage
+      deployment_type: custom_dag
+      runner_group: de-ckpetlbatch-common # for CKPETLBatch account, please use other runner groups if you are not in CKPETL      
+
+  prod_dag:
+    if: github.event.pull_request.merged == true
+    needs: stage_dag
+    uses: gdcorp-dna/de-github-actions-common/.github/workflows/deploy_common.yaml@main  #TODO: Change to commit SHA
+    with:
+      aws_environment: prod
+      deployment_type: custom_dag
+      runner_group: de-ckpetlbatch-common # for CKPETLBatch account, please use other runner groups if you are not in CKPETL

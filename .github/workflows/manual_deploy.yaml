@@ -1,0 +1,41 @@
+# Deploy any type of code, anywhere, manually
+# Please note only "main" branch can be deployed to prod. The workflow will error if you try to deploy some other branch to prod.
+
+name: Manual Deploy
+
+# Always manually
+on:
+  workflow_dispatch:
+    inputs:
+      aws_environment:
+        description: Which environment to deploy, dev-private, stage, prod
+        required: true
+        type: choice
+        options:
+        - dev-private
+        - stage
+        - prod
+        default: dev-private
+      deployment_type:
+        description: Code and DAGs are deployed differently, send "code" for code or "common_dag" for common dags and "custom_dag" for user DAGs deployment
+        required: false
+        type: choice
+        options:
+        - code
+        - custom_dag
+        - common_dag
+        default: code
+      branch_to_deploy:
+        description: The GitHub branch you want to deploy. Please note only main branch can be deployed to prod. This could be a SHA, tag or branch.
+        required: false
+        type: string
+        default: main
+
+jobs:
+  manual_deploy:
+    uses: gdcorp-dna/de-github-actions-common/.github/workflows/deploy_common.yaml@main  #TODO: Change to commit SHA
+    with:
+      aws_environment: ${{ inputs.aws_environment }}
+      deployment_type: ${{ inputs.deployment_type }}
+      branch_to_deploy: ${{ inputs.branch_to_deploy }}
+      runner_group: de-ckpetlbatch-common # for CKPETLBatch account, please use other runner groups if you are not in CKPETL

@@ -1,0 +1,39 @@
+# Deploy code to Stage and Prod
+# Not deploying to dev-private as it can overwrite user's test code
+
+name: Code - Stage & Prod
+
+# Run when PR is merged to main branch only
+on:
+  pull_request:
+    branches:
+      - main
+    types: 
+      - closed
+    paths-ignore:  # will not deploy dags, there is separate pipeline for that
+      - 'dags/**'
+      - '**/dags/**'
+      - '.github/**'      
+
+# Ensures that only one deploy task will run at a time.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  deploy_code_stage:
+    if: github.event.pull_request.merged == true
+    uses: gdcorp-dna/de-github-actions-common/.github/workflows/deploy_common.yaml@main  #TODO: Change to commit SHA
+    with:
+      aws_environment: stage
+      deployment_type: code
+      runner_group: de-ckpetlbatch-common # for CKPETLBatch account, please use other runner groups if you are not in CKPETL      
+
+  deploy_code_prod:
+    if: github.event.pull_request.merged == true
+    needs: deploy_code_stage
+    uses: gdcorp-dna/de-github-actions-common/.github/workflows/deploy_common.yaml@main  #TODO: Change to commit SHA
+    with:
+      aws_environment: prod
+      deployment_type: code
+      runner_group: de-ckpetlbatch-common # for CKPETLBatch account, please use other runner groups if you are not in CKPETL            

@@ -1,0 +1,46 @@
+[
+  {
+    "environment": "dev-private",
+    "deploy_role": "arn:aws:iam::255575434142:role/GD-AWS-USA-GPD-CKPEtlBatch-Dev-Private-Deploy",
+    "code_location": "s3://gd-ckpetlbatch-dev-private-code",
+    "code_backup_location": "s3://gd-ckpetlbatch-dev-private-code",
+    "mwaa_repo_name": "mwaa-ckpetlbatch",
+    "aws_region": "us-west-2",
+    "slack_channel": "edt-builds",
+    "slack_webhook_secret": "/Secrets/DE/Common/SLACK_WEBHOOK",
+    "artifactory_ro_credentials_secret": "/Secrets/DE/Common/ARTIFACTORY_RO_CREDENTIALS"
+  },
+  {
+    "environment": "stage",
+    "deploy_role": "arn:aws:iam::868372281343:role/GD-AWS-USA-GPD-CKPEtlBatch-Stage-Deploy",
+    "code_location": "s3://gd-ckpetlbatch-stage-code",
+    "code_backup_location": "s3://gd-ckpetlbatch-stage-code",
+    "mwaa_repo_name": "mwaa-ckpetlbatch",
+    "aws_region": "us-west-2",
+    "slack_channel": "edt-builds",
+    "slack_webhook_secret": "/Secrets/DE/Common/SLACK_WEBHOOK",
+    "artifactory_ro_credentials_secret": "/Secrets/DE/Common/ARTIFACTORY_RO_CREDENTIALS"
+  },
+  {
+    "environment": "prod",
+    "deploy_role": "arn:aws:iam::688051721285:role/GD-AWS-USA-GPD-CKPEtlBatch-Prod-Deploy",
+    "code_location": "s3://gd-ckpetlbatch-prod-code",
+    "code_backup_location": "s3://gd-ckpetlbatch-prod-code",
+    "mwaa_repo_name": "mwaa-ckpetlbatch",
+    "aws_region": "us-west-2",
+    "slack_channel": "edt-builds",
+    "slack_webhook_secret": "/Secrets/DE/Common/SLACK_WEBHOOK",
+    "artifactory_ro_credentials_secret": "/Secrets/DE/Common/ARTIFACTORY_RO_CREDENTIALS"
+  },
+  {
+    "environment": "cicd",
+    "deploy_role": "arn:aws:iam::650754360059:role/GD-AWS-USA-GPD-CKPEtlBatch-CICD-Deploy",
+    "code_location": "",
+    "code_backup_location": "",
+    "mwaa_repo_name": "mwaa-ckpetlbatch",
+    "aws_region": "us-west-2",
+    "slack_channel": "edt-builds",
+    "slack_webhook_secret": "/Secrets/DE/Common/SLACK_WEBHOOK",
+    "artifactory_ro_credentials_secret": "/Secrets/DE/Common/ARTIFACTORY_RO_CREDENTIALS"
+  }
+]

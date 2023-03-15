@@ -1,0 +1,19 @@
+[tool.tartufo]
+repo-path = "."
+cleanup = true
+regex = true
+entropy = true
+
+exclude-path-patterns = [
+    {path-pattern = "tartufo.toml", reason = "tartufo file with exclusion patterns"},
+]
+
+exclude-signatures = [
+    {signature = "93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8", reason = "the commit hash for actions/checkout v3.1.0"},
+    {signature = "3d4684c758fa9fdaf9b9cb044d0b9daa86606525", reason = "the commit hash for godaddy/tartufo v3.2.1"},
+    {signature = "67fbcbb121271f7775d2e7715933280b06314838", reason = "the commit hash for aws-actions/configure-aws-credentials v1.7.0"},
+    {signature = "bafac38d78b5f679d35ef3f36f9842a63de59564", reason = "the commit hash for aws-actions/aws-secretsmanager-get-secrets v1.0.0"},
+    {signature = "f565a63638bd3615e76249bffab00fcb9dab90f7", reason = "the commit hash for gdcorp-action-public-forks/action-slack-notify v2.1.3"}
+]
+
+exclude-entropy-patterns = []
